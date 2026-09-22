@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: pugnara-postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: pugnara
+      POSTGRES_PASSWORD: pugnara
+      POSTGRES_DB: pugnara
+    volumes:
+      - pugnara_pg_data:/var/lib/postgresql/data
+
+volumes:
+  pugnara_pg_data:

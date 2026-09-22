@@ -1,0 +1,27 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Aplicacion Web Gestor De Torneo Deportivos :  Pugnara",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "node --watch server/index.js",
+    "start": "node server/index.js",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gabriel Pino , Jhan Rivera , Camilo Marroquin",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^7.10.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.1",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "prisma": "^7.10.0"
+  }
+}
