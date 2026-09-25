@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 
-function LandingPage() {
-  const { user } = useAuth();
+function Inicio() {
 
   return (
     <div className="landing-page-wrapper">
@@ -27,7 +25,6 @@ function LandingPage() {
           </p>
           <div className="hero-actions">
             <Link to="/torneos" className="btn-primary">Explorar Torneos</Link>
-            {!user && <Link to="/register" className="btn-secondary">Unirse a la Liga</Link>}
           </div>
         </div>
       </section>
@@ -64,11 +61,7 @@ function LandingPage() {
           <div className="cta-container-box">
             <h2>No te quedes fuera de la próxima temporada</h2>
             <p>Las inscripciones para el torneo interfacultades cierran pronto. Reúne a tu squad hoy mismo.</p>
-            {user ? (
-              <Link to="/create-tournament" className="btn-primary">Organizar un Torneo</Link>
-            ) : (
               <Link to="/register" className="btn-primary">Registrarme Ahora</Link>
-            )}
           </div>
         </section>
 
@@ -77,4 +70,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default Inicio
