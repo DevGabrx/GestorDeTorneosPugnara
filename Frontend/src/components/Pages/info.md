@@ -1,0 +1,1 @@
+Landing page de inicio, la cual presenta la informacion del gestor de torneos PUGNARA
