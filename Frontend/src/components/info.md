@@ -1,0 +1,1 @@
+Carpeta de paginas de la web, organizadas por categorias diferentes
