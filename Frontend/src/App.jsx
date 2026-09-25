@@ -2,6 +2,19 @@ import { useCallback, useEffect, useState } from 'react'
 import { createTournament, fetchTournaments } from './api/tournaments.js'
 import './App.css'
 
+// index.css define .badge (forma) + un modificador de color: .badge-active,
+// .badge-pending, .badge-cancelled, .badge-staff. Este helper elige el
+// modificador según el texto de estado que venga del backend.
+function statusBadgeClass(status) {
+  const key = (status || '').toString().toLowerCase()
+  if (key.includes('cancel')) return 'badge-cancelled'
+  if (key.includes('open') || key.includes('activ') || key.includes('curso')) return 'badge-active'
+  if (key.includes('final') || key.includes('cerrad') || key.includes('closed') || key.includes('complete')) {
+    return 'badge-staff'
+  }
+  return 'badge-pending'
+}
+
 function App() {
   const [tournaments, setTournaments] = useState([])
   const [loadingList, setLoadingList] = useState(true)
@@ -64,6 +77,7 @@ function App() {
           <label>
             Nombre
             <input
+              className="input"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -74,6 +88,7 @@ function App() {
           <label>
             Cupo de equipos
             <input
+              className="input"
               type="number"
               min={2}
               max={128}
@@ -84,17 +99,18 @@ function App() {
           <label>
             Tag del capitán (opcional)
             <input
+              className="input"
               type="text"
               value={captainTag}
               onChange={(e) => setCaptainTag(e.target.value)}
               placeholder="#ABC123"
             />
           </label>
-          <button type="submit" disabled={submitting}>
+          <button className="btn btn-solid" type="submit" disabled={submitting}>
             {submitting ? 'Creando…' : 'Crear torneo'}
           </button>
         </form>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? <p className="alerta error">{error}</p> : null}
       </section>
 
       <section className="panel">
@@ -109,7 +125,7 @@ function App() {
               <li key={t.id} className="tournament-card">
                 <div className="card-head">
                   <strong>{t.name}</strong>
-                  <span className="badge">{t.status}</span>
+                  <span className={`badge ${statusBadgeClass(t.status)}`}>{t.status}</span>
                 </div>
                 <p className="meta">
                   {t.game} · hasta {t.maxTeams} equipos

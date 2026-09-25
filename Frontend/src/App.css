@@ -1,85 +1,77 @@
+/*
+  App.css — usa index.css como base de diseño.
+  Solo variables definidas en index.css (--negro, --blanco, --lavanda,
+  --morado, --verde, --rojo, --amarrillo). No se redefinen .badge ni
+  .error/.alerta: esos ya vienen de index.css y se combinan en el JSX.
+*/
+
 .app {
-  text-align: left;
-  padding: 1.5rem 1.25rem 3rem;
   width: 100%;
   max-width: 640px;
   margin: 0 auto;
+  padding: 40px 20px 60px;
   box-sizing: border-box;
 }
 
 .app-header h1 {
-  font-size: 1.75rem;
-  margin: 0 0 0.35rem;
-  letter-spacing: -0.02em;
+  font-size: 1.9rem;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.4rem;
+  color: var(--blanco);
 }
 
-.subtitle {
-  color: var(--text);
+.app-header .subtitle {
   font-size: 0.95rem;
+  color: rgba(243, 242, 247, 0.65); /* --blanco atenuado */
   margin: 0 0 1.5rem;
 }
 
 .panel {
-  background: var(--code-bg);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.25rem;
-  margin-bottom: 1.25rem;
+  background: rgba(139, 92, 246, 0.06); /* --lavanda muy tenue */
+  border: 1px solid rgba(243, 242, 247, 0.14);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
 }
 
 .panel h2 {
-  margin-top: 0;
-  font-size: 1.1rem;
+  margin: 0 0 16px;
+  font-size: 1.15rem;
+  color: var(--blanco);
 }
 
 .tournament-form {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 14px;
 }
 
 .tournament-form label {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
-  font-size: 0.9rem;
-  color: var(--text-h);
+  gap: 6px;
+  font-size: 0.88rem;
+  color: rgba(243, 242, 247, 0.75);
 }
 
-.tournament-form input {
-  font: inherit;
-  padding: 0.5rem 0.65rem;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-h);
+.tournament-form .input {
+  width: 100%;
 }
 
-.tournament-form button {
-  font: inherit;
-  margin-top: 0.25rem;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
-  border: 1px solid var(--accent-border);
-  background: var(--accent-bg);
-  color: var(--text-h);
-  cursor: pointer;
+.tournament-form button.btn {
+  align-self: flex-start;
+  margin-top: 4px;
 }
 
-.tournament-form button:disabled {
-  opacity: 0.6;
+.tournament-form button.btn:disabled {
+  opacity: 0.55;
   cursor: not-allowed;
 }
 
-.error {
-  color: #dc2626;
-  margin: 0.75rem 0 0;
-  font-size: 0.9rem;
-}
-
 .muted {
-  color: var(--text);
+  color: rgba(243, 242, 247, 0.55);
   margin: 0;
+  font-size: 0.9rem;
 }
 
 .tournament-list {
@@ -88,46 +80,47 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 12px;
 }
 
 .tournament-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.85rem 1rem;
-  background: var(--bg);
+  border: 1px solid rgba(243, 242, 247, 0.16);
+  border-radius: 14px;
+  padding: 16px 18px;
+  background: rgba(243, 242, 247, 0.03);
 }
 
 .card-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  margin-bottom: 6px;
 }
 
-.badge {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  padding: 0.15rem 0.45rem;
-  border-radius: 999px;
-  border: 1px solid var(--accent-border);
-  color: var(--text-h);
+.card-head strong {
+  color: var(--blanco);
+  font-weight: 600;
 }
 
 .meta {
   font-size: 0.85rem;
-  color: var(--text);
-  margin: 0.35rem 0 0;
+  color: rgba(243, 242, 247, 0.6);
+  margin: 0.3rem 0 0;
 }
 
 .captain {
-  margin-top: 0.5rem;
-  padding-top: 0.5rem;
-  border-top: 1px dashed var(--border);
+  margin-top: 0.6rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(243, 242, 247, 0.2);
 }
 
 .captain p {
   margin: 0.2rem 0;
   font-size: 0.9rem;
+  color: var(--blanco);
+}
+
+.captain strong {
+  color: var(--morado);
 }
