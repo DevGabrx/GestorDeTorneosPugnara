@@ -46,13 +46,116 @@
   color: var(--text-h);
 }
 
-.tournament-form input {
+.tournament-form input,
+.inline-add input {
   font: inherit;
   padding: 0.5rem 0.65rem;
   border-radius: 8px;
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text-h);
+}
+
+.mode-fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.mode-fieldset legend {
+  font-size: 0.9rem;
+  color: var(--text-h);
+  margin-bottom: 0.45rem;
+}
+
+.mode-grid {
+  display: grid;
+  gap: 0.6rem;
+}
+
+.mode-option {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  cursor: pointer;
+}
+
+.mode-option.is-selected {
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+}
+
+.mode-option input {
+  grid-row: span 2;
+  margin-top: 0.2rem;
+}
+
+.mode-label {
+  font-weight: 600;
+}
+
+.mode-hint,
+.field-hint {
+  grid-column: 2;
+  font-size: 0.8rem;
+  color: var(--text);
+}
+
+.player-adder {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.6rem;
+  align-items: end;
+}
+
+.draft-players,
+.player-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.draft-player {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.45rem 0.55rem;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+
+.linkish {
+  font: inherit;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+}
+
+.inline-add {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.inline-add button {
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent-border);
+  background: var(--accent-bg);
+  color: var(--text-h);
+  cursor: pointer;
 }
 
 .tournament-form button {

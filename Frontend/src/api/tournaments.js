@@ -18,3 +18,16 @@ export async function createTournament(payload) {
   }
   return data;
 }
+
+export async function addPlayerToTournament(tournamentId, tag) {
+  const res = await fetch(`/api/tournaments/${tournamentId}/players`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ tag }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error ?? 'Error al agregar el jugador');
+  }
+  return data;
+}
