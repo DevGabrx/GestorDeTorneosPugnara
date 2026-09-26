@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "MS-CEINTL.vscode-language-pack-es",
+    "formulahendry.auto-close-tag",
+    "formulahendry.auto-complete-tag",
+    "WallabyJs.console-ninja",
+    "christian-kohler.npm-intellisense",
+    "naumovs.color-highlight",
+    "dbaeumer.vscode-eslint",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "formulahendry.auto-rename-tag",
+    "usernamehw.errorlens",
+    "PKief.material-icon-theme",
+    "zhuangtongfa.material-theme"
+  ]
+}
