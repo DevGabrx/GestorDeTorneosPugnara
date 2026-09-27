@@ -3,18 +3,30 @@ import Inicio from './components/Pages/Inicio'
 import Creartorneo from './components/Pages/Creartorneo';
 import './App.css'
 
+// index.css define .badge (forma) + un modificador de color: .badge-active,
+// .badge-pending, .badge-cancelled, .badge-staff. Este helper elige el
+// modificador según el texto de estado que venga del backend.
+
 function App() {
   return (
     <>
     <Router>
-      <nav className='c-menu'>
-        <Link to="/">Inicio</Link>
-        <Link to="/Creartorneo">Crear</Link>
+      <nav className='navbar'>
+        <div className='logo'>
+          <Link to='/'><img src='/logo-Pugnara-oficial.svg' alt='logo'/></Link>
+        </div>
+        <div className='nav-links'>
+          <Link to="/">Inicio</Link>
+          <Link to="/Creartorneo">Crear</Link>
+        </div>
+        
       </nav>
-      <Routes>
-      <Route path='/' element={<Inicio/>}/>  
-      <Route path='/Creartorneo' element={<Creartorneo/>}/>
-      </Routes>
+      <main className="page-content">
+        <Routes>
+          <Route path='/' element={<Inicio/>}/>  
+          <Route path='/Creartorneo' element={<Creartorneo/>}/>
+        </Routes>
+      </main>
     </Router>
     </>
   )
