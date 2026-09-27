@@ -126,7 +126,7 @@ function Creartorneo() {
     <div className="app">
       <header className="app-header">
         <h1>Crear torneo</h1>
-        <p className="subtitle">
+        <p>
           Elige la modalidad, define el cupo de la partida y agrega jugadores
           de Brawl Stars por su tag.
         </p>
@@ -134,7 +134,7 @@ function Creartorneo() {
 
       <section className="panel">
         <h2>Nuevo torneo</h2>
-        <form className="tournament-form" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <label>
             Nombre
             <input
@@ -148,11 +148,11 @@ function Creartorneo() {
 
           <fieldset className="mode-fieldset">
             <legend>Modalidad</legend>
-            <div className="mode-grid">
+            <div className="grid">
               {TOURNAMENT_MODES.map((item) => (
                 <label
                   key={item.id}
-                  className={`mode-option ${mode === item.id ? 'is-selected' : ''}`}
+                  className={`option  ${mode === item.id ? 'is-selected' : ''}`}
                 >
                   <input
                     type="radio"
@@ -161,8 +161,8 @@ function Creartorneo() {
                     checked={mode === item.id}
                     onChange={() => handleModeChange(item.id)}
                   />
-                  <span className="mode-label">{item.label}</span>
-                  <span className="mode-hint">{item.description}</span>
+                  <span><strong>{item.label}</strong></span>
+                  <p className='subtitle'>{item.description}</p>
                 </label>
               ))}
             </div>
@@ -178,7 +178,7 @@ function Creartorneo() {
               onChange={(e) => setMatchCapacity(e.target.value)}
               required
             />
-            <span className="field-hint">
+            <span className="subtitle">
               {selectedMode.label}: una partida típica es de{' '}
               {selectedMode.typicalMatchSize} jugadores. Rango permitido:{' '}
               {selectedMode.minMatchCapacity}–{selectedMode.maxMatchCapacity}.
@@ -202,6 +202,7 @@ function Creartorneo() {
               />
             </label>
             <button
+            className='btn-outline'
               type="button"
               onClick={handleAddPlayer}
               disabled={lookingUp || players.length >= Number(matchCapacity)}
@@ -216,14 +217,14 @@ function Creartorneo() {
                 <li key={player.tag} className="draft-player">
                   <div>
                     <strong>{player.name}</strong>
-                    <span className="meta">
+                    <span>
                       {' '}
                       {player.tag} · {player.trophies} trofeos
                     </span>
                   </div>
                   <button
+                    className="btn-solid"
                     type="button"
-                    className="linkish"
                     onClick={() => removeDraftPlayer(player.tag)}
                   >
                     Quitar
@@ -235,15 +236,15 @@ function Creartorneo() {
             <p className="muted">Aún no hay jugadores. Puedes crear el torneo y agregarlos después.</p>
           )}
 
-          <p className="meta">
+          <p>
             Cupo: {players.length}/{matchCapacity}
           </p>
 
-          <button type="submit" disabled={submitting}>
+          <button className="btn-solid"type="submit" disabled={submitting}>
             {submitting ? 'Creando…' : 'Crear torneo'}
           </button>
         </form>
-        {error ? <p className="error">{error}</p> : null}
+        {error ? <p className="alerta error">{error}</p> : null}
       </section>
 
       <section className="panel">
@@ -255,12 +256,12 @@ function Creartorneo() {
         ) : (
           <ul className="tournament-list">
             {tournaments.map((t) => (
-              <li key={t.id} className="tournament-card">
+              <li key={t.id} className="torneo-card">
                 <div className="card-head">
                   <strong>{t.name}</strong>
-                  <span className="badge">{t.status}</span>
+                  <span className="badge badge-active">{t.status}</span>
                 </div>
-                <p className="meta">
+                <p>
                   {t.game} · {t.modeLabel ?? t.mode} · cupo {t.players?.length ?? 0}/
                   {t.matchCapacity}
                 </p>
@@ -269,15 +270,15 @@ function Creartorneo() {
                     {t.players.map((player) => (
                       <li key={player.tag}>
                         <strong>{player.name}</strong> {player.tag}
-                        <span className="meta"> · {player.trophies} trofeos</span>
+                        <span> · {player.trophies} trofeos</span>
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <p className="meta">Sin jugadores todavía.</p>
+                  <p>Sin jugadores todavía.</p>
                 )}
                 {(t.players?.length ?? 0) < t.matchCapacity ? (
-                  <div className="inline-add">
+                  <div>
                     <input
                       type="text"
                       value={extraTags[t.id] ?? ''}
@@ -291,6 +292,7 @@ function Creartorneo() {
                       aria-label={`Agregar jugador a ${t.name}`}
                     />
                     <button
+                      className='btn-solid'
                       type="button"
                       disabled={addingToId === t.id}
                       onClick={() => handleAddExisting(t.id)}
@@ -299,7 +301,7 @@ function Creartorneo() {
                     </button>
                   </div>
                 ) : (
-                  <p className="meta">Cupo completo.</p>
+                  <p>Cupo completo.</p>
                 )}
               </li>
             ))}
