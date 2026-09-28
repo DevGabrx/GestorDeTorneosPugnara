@@ -3,7 +3,6 @@ import {
   listTournaments,
   createTournament,
   addPlayerToTournament,
-  addMatchResult,
 } from '../services/tournaments.service.js';
 
 const router = Router();
@@ -26,15 +25,6 @@ router.post('/:id/players', async (req, res, next) => {
     const { tag } = req.body;
     const updated = await addPlayerToTournament(req.params.id, tag);
     res.json(updated);
-  } catch (err) {
-    next(err);
-  }
-});
-
-router.post('/:id/matches', (req, res, next) => {
-  try {
-    const updated = addMatchResult(req.params.id, req.body.results);
-    res.status(201).json(updated);
   } catch (err) {
     next(err);
   }

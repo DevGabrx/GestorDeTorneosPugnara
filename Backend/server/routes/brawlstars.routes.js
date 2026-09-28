@@ -8,19 +8,16 @@ router.get('/players/:tag', async (req, res) => {
     const snapshot = await fetchPlayerSnapshot(req.params.tag);
     res.json(snapshot);
   } catch (error) {
-    const statusMap = {
-      INVALID_TAG: 400,
-      PLAYER_NOT_FOUND: 404,
-      FORBIDDEN: 403,
-      MISSING_TOKEN: 500,
-      API_ERROR: 502,
-    };
-
-    const statusCode = statusMap[error.code];
-    if (statusCode) {
-      return res.status(statusCode).json({ error: error.message });
+    const code = error.code;
+    if (
+      code === 'INVALID_TAG' ||
+      code === 'PLAYER_NOT_FOUND' ||
+      code === 'FORBIDDEN' ||
+      code === 'MISSING_TOKEN' ||
+      code === 'API_ERROR'
+    ) {
+      return res.status(400).json({ error: error.message });
     }
-
     console.error(error);
     res.status(500).json({ error: 'Error al consultar Brawl Stars' });
   }
