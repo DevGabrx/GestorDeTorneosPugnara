@@ -86,12 +86,30 @@ function Creartorneo() {
     setSubmitting(true)
     setError('')
     try {
-      await createTournament({
+      // 1. Petición al backend
+      const created = await createTournament({
         name,
         mode,
         matchCapacity: Number(matchCapacity),
         playerTags: players.map((player) => player.tag),
       })
+
+      // 2. Guardar en LocalStorage para que Gestortorneo.jsx lo lea al instante
+      const nuevoTorneoParaBracket = {
+        id: created?.id || Date.now(),
+        name: name,
+        mode: mode,
+        // Guardamos los nombres/tags de los jugadores registrados
+        players: players.map((p) => p.name || p.tag),
+      }
+
+      const torneosLocales = JSON.parse(localStorage.getItem('torneos')) || []
+      localStorage.setItem(
+        'torneos',
+        JSON.stringify([...torneosLocales, nuevoTorneoParaBracket])
+      )
+
+      // 3. Limpieza del formulario
       setName('')
       setPlayerTag('')
       setPlayers([])
