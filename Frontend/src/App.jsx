@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes, Navigate,Link } from 'react-router-dom';
-import Inicio from './components/Pages/Inicio'
+import Inicio from './components/Pages/Inicio/Inicio'
 import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
 import './App.css'
 
