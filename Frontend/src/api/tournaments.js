@@ -31,3 +31,16 @@ export async function addPlayerToTournament(tournamentId, tag) {
   }
   return data;
 }
+
+export async function recordMatch(tournamentId, results) {
+  const res = await fetch(`/api/tournaments/${tournamentId}/matches`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ results }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error ?? 'No se pudo guardar la partida');
+  }
+  return data;
+}

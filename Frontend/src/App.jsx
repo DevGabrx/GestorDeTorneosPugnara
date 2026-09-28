@@ -1,6 +1,7 @@
-import { BrowserRouter as Router, Route, Routes, Navigate,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Inicio from './components/Pages/Inicio'
 import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
+import Ranking from './components/Pages/Ranking/Ranking'
 import './App.css'
 
 // index.css define .badge (forma) + un modificador de color: .badge-active,
@@ -18,6 +19,7 @@ function App() {
         <div className='nav-links'>
           <Link to="/">Inicio</Link>
           <Link to="/Creartorneo">Crear</Link>
+          <Link to="/ranking">Ranking</Link>
         </div>
         
       </nav>
@@ -25,6 +27,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Inicio/>}/>  
           <Route path='/Creartorneo' element={<Creartorneo/>}/>
+          <Route path='/ranking' element={<Ranking/>}/>
         </Routes>
       </main>
     </Router>
