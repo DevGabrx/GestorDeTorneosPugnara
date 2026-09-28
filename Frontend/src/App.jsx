@@ -1,3 +1,7 @@
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import Inicio from './components/Pages/Inicio'
+import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
+import Ranking from './components/Pages/Ranking/Ranking'
 import { BrowserRouter as Router, Route, Routes, Navigate,Link } from 'react-router-dom';
 import Inicio from './components/Pages/Inicio/Inicio'
 import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
@@ -19,6 +23,7 @@ function App() {
         <div className='nav-links'>
           <Link to="/">Inicio</Link>
           <Link to="/Creartorneo">Crear</Link>
+          <Link to="/ranking">Ranking</Link>
         </div>
         
         
@@ -27,6 +32,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Inicio/>}/>  
           <Route path='/Creartorneo' element={<Creartorneo/>}/>
+          <Route path='/ranking' element={<Ranking/>}/>
           <Route path='/Gestortorneo' element={<Gestortorneo/>}/>
         </Routes>
       </main>
