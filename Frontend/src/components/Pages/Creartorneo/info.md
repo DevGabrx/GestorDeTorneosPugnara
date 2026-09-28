@@ -1,0 +1,1 @@
+El creartorneo.jsx, se encarga de crear los diferentes torneos con los respectivos jugadores registrados.
