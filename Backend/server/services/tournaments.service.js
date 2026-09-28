@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { fetchPlayerSnapshot } from './brawlstars.service.js';
+import { fetchPlayerSnapshot, normalizePlayerTag } from './brawlstars.service.js';
 
 const tournaments = [];
 
@@ -9,7 +9,7 @@ export function listTournaments() {
   );
 }
 
-export async function createTournament({ name, maxTeams, captainTag }) {
+export async function createTournament({ name, mode, matchCapacity, playerTags = [] }) {
   const trimmedName = String(name ?? '').trim();
   if (!trimmedName) {
     const err = new Error('El nombre del torneo es obligatorio');
@@ -17,33 +17,63 @@ export async function createTournament({ name, maxTeams, captainTag }) {
     throw err;
   }
 
-  const teams = Number(maxTeams);
-  const resolvedMaxTeams =
-    Number.isFinite(teams) && teams > 0 ? Math.floor(teams) : 8;
+  const capacity = Number(matchCapacity);
+  const resolvedCapacity = Number.isFinite(capacity) && capacity > 0 ? capacity : 10;
 
-  let captainSnapshot = null;
-  let resolvedCaptainTag = null;
-
-  const tagInput = String(captainTag ?? '').trim();
-  if (tagInput) {
-    resolvedCaptainTag = tagInput.startsWith('#')
-      ? tagInput.toUpperCase()
-      : `#${tagInput.toUpperCase()}`;
-    captainSnapshot = await fetchPlayerSnapshot(resolvedCaptainTag);
-    resolvedCaptainTag = captainSnapshot.tag ?? resolvedCaptainTag;
+  // Consultar información real de Brawl Stars para cada playerTag enviado
+  const players = [];
+  for (const rawTag of playerTags) {
+    const normalized = normalizePlayerTag(rawTag);
+    if (normalized) {
+      try {
+        const snapshot = await fetchPlayerSnapshot(normalized);
+        players.push(snapshot);
+      } catch (err) {
+        console.error(`Error obteniendo tag ${normalized}:`, err.message);
+      }
+    }
   }
 
   const tournament = {
     id: randomUUID(),
     name: trimmedName,
     game: 'Brawl Stars',
-    maxTeams: resolvedMaxTeams,
+    mode: mode || 'soloShowdown',
+    matchCapacity: resolvedCapacity,
+    players: players, // Lista de objetos { tag, name, trophies, ... }
     status: 'open',
     createdAt: new Date().toISOString(),
-    captainTag: resolvedCaptainTag,
-    captainSnapshot,
   };
 
   tournaments.push(tournament);
+  return tournament;
+}
+
+export async function addPlayerToTournament(tournamentId, rawTag) {
+  const tournament = tournaments.find((t) => t.id === tournamentId);
+  if (!tournament) {
+    const err = new Error('Torneo no encontrado');
+    err.code = 'NOT_FOUND';
+    throw err;
+  }
+
+  if (tournament.players.length >= tournament.matchCapacity) {
+    const err = new Error('El torneo ya alcanzó su cupo máximo');
+    err.code = 'FULL_CAPACITY';
+    throw err;
+  }
+
+  const normalized = normalizePlayerTag(rawTag);
+  const alreadyIn = tournament.players.some((p) => p.tag === normalized);
+  if (alreadyIn) {
+    const err = new Error(`El jugador con tag ${normalized} ya está en este torneo`);
+    err.code = 'DUPLICATE_PLAYER';
+    throw err;
+  }
+
+  // Se obtiene el snapshot actualizado desde Brawl Stars
+  const snapshot = await fetchPlayerSnapshot(normalized);
+  tournament.players.push(snapshot);
+
   return tournament;
 }

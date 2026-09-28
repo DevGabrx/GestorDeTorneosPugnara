@@ -1,1 +1,3 @@
-Carpeta de paginas de la web, organizadas por categorias diferentes
+//----------*----------*----------*----------*----------*----------*
+Carpeta llena de componentes que componen a la pagina web
+//----------*----------*----------*----------*----------*----------*

@@ -368,6 +368,7 @@ button {
   color: var(--rojo);
 }
 
+/*Tarjeta torneos*/
 
 .torneo-card {
   border: 1px solid var(--blanco);

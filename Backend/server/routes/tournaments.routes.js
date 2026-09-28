@@ -1,33 +1,32 @@
 import { Router } from 'express';
 import {
-  createTournament,
   listTournaments,
+  createTournament,
+  addPlayerToTournament,
 } from '../services/tournaments.service.js';
 
 const router = Router();
 
-router.get('/', (_req, res) => {
+router.get('/', (req, res) => {
   res.json(listTournaments());
 });
 
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   try {
-    const tournament = await createTournament(req.body ?? {});
+    const tournament = await createTournament(req.body);
     res.status(201).json(tournament);
-  } catch (error) {
-    const code = error.code;
-    if (
-      code === 'VALIDATION' ||
-      code === 'INVALID_TAG' ||
-      code === 'PLAYER_NOT_FOUND' ||
-      code === 'FORBIDDEN' ||
-      code === 'MISSING_TOKEN' ||
-      code === 'API_ERROR'
-    ) {
-      return res.status(400).json({ error: error.message });
-    }
-    console.error(error);
-    res.status(500).json({ error: 'Error interno al crear el torneo' });
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.post('/:id/players', async (req, res, next) => {
+  try {
+    const { tag } = req.body;
+    const updated = await addPlayerToTournament(req.params.id, tag);
+    res.json(updated);
+  } catch (err) {
+    next(err);
   }
 });
 

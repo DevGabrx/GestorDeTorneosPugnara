@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { fetchPlayer } from '../../api/brawlstars.js'
+import { fetchPlayer } from '../../../api/brawlstars.js'
 import {
   addPlayerToTournament,
   createTournament,
   fetchTournaments,
-} from '../../api/tournaments.js'
-import { modeById, TOURNAMENT_MODES } from '../../constants/tournamentModes.js'
+} from '../../../api/tournaments.js'
+import { modeById, TOURNAMENT_MODES } from '../../../constants/tournamentModes.js'
+import './Creartorneo.css'
 
 function Creartorneo() {
   const [tournaments, setTournaments] = useState([])
@@ -255,56 +256,73 @@ function Creartorneo() {
           <p className="muted">Aún no hay torneos. Crea el primero arriba.</p>
         ) : (
           <ul className="tournament-list">
-            {tournaments.map((t) => (
-              <li key={t.id} className="torneo-card">
-                <div className="card-head">
-                  <strong>{t.name}</strong>
-                  <span className="badge badge-active">{t.status}</span>
-                </div>
-                <p>
-                  {t.game} · {t.modeLabel ?? t.mode} · cupo {t.players?.length ?? 0}/
-                  {t.matchCapacity}
-                </p>
-                {t.players?.length ? (
-                  <ul className="player-list">
-                    {t.players.map((player) => (
-                      <li key={player.tag}>
-                        <strong>{player.name}</strong> {player.tag}
-                        <span> · {player.trophies} trofeos</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Sin jugadores todavía.</p>
-                )}
-                {(t.players?.length ?? 0) < t.matchCapacity ? (
-                  <div>
-                    <input
-                      type="text"
-                      value={extraTags[t.id] ?? ''}
-                      onChange={(e) =>
-                        setExtraTags((current) => ({
-                          ...current,
-                          [t.id]: e.target.value,
-                        }))
-                      }
-                      placeholder="#TAG"
-                      aria-label={`Agregar jugador a ${t.name}`}
-                    />
-                    <button
-                      className='btn-solid'
-                      type="button"
-                      disabled={addingToId === t.id}
-                      onClick={() => handleAddExisting(t.id)}
-                    >
-                      {addingToId === t.id ? 'Agregando…' : 'Agregar'}
-                    </button>
+            {tournaments.map((t) => {
+              // Garantizamos obtener el arreglo de jugadores sin importar cómo venga del backend
+              const currentPlayers = t.players || []
+              const capacity = t.matchCapacity || t.maxTeams || 10
+
+              return (
+                <li key={t.id} className="torneo-card">
+                  <div className="card-head">
+                    <strong>{t.name}</strong>
+                    <span className="badge badge-active">{t.status}</span>
                   </div>
-                ) : (
-                  <p>Cupo completo.</p>
-                )}
-              </li>
-            ))}
+                  <p>
+                    {t.game} · {t.modeLabel ?? t.mode} · cupo {currentPlayers.length}/{capacity}
+                  </p>
+
+                  {/* Lista de Jugadores Registrados */}
+                  {currentPlayers.length > 0 ? (
+                    <ul className="player-list">
+                      {currentPlayers.map((player) => (
+                        <li key={player.tag}>
+                          <strong>{player.name || 'Jugador'}</strong> {player.tag}
+                          {player.trophies !== undefined && (
+                            <span> · {player.trophies} trofeos</span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="muted">Sin jugadores todavía.</p>
+                  )}
+
+                  {/* Formulario Inline para agregar jugadores después de creado */}
+                  {currentPlayers.length < capacity ? (
+                    <div className="player-adder-inline">
+                      <input
+                        type="text"
+                        value={extraTags[t.id] ?? ''}
+                        onChange={(e) =>
+                          setExtraTags((current) => ({
+                            ...current,
+                            [t.id]: e.target.value,
+                          }))
+                        }
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault()
+                            handleAddExisting(t.id)
+                          }
+                        }}
+                        placeholder="#TAG"
+                        aria-label={`Agregar jugador a ${t.name}`}
+                      />
+                      <button
+                        className="btn-solid"
+                        type="button"
+                        disabled={addingToId === t.id}
+                        onClick={() => handleAddExisting(t.id)}
+                      >
+                        {addingToId === t.id ? 'Agregando…' : 'Agregar'}
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="muted">Cupo completo.</p>
+                  )}
+                </li>
+              )
+            })}
           </ul>
         )}
       </section>
