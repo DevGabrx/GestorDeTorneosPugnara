@@ -17,4 +17,16 @@ app.use((_req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
 
+import axios from 'axios';
+
+app.get('/mi-ip', async (req, res) => {
+  try {
+    const response = await axios.get('https://api.ipify.org?format=json');
+    res.json({ ip_publica_render: response.data.ip });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 export default app;
+
