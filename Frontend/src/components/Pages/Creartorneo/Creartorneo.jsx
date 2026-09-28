@@ -252,7 +252,7 @@ function Creartorneo() {
               ))}
             </ul>
           ) : (
-            <p className="muted">Aún no hay jugadores. Puedes crear el torneo y agregarlos después.</p>
+            <p class="text-3xl font-bold underline">Aún no hay jugadores. Puedes crear el torneo y agregarlos después.</p>
           )}
 
           <p>

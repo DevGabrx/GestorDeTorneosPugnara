@@ -1,11 +1,8 @@
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import Inicio from './components/Pages/Inicio'
-import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
-import Ranking from './components/Pages/Ranking/Ranking'
-import { BrowserRouter as Router, Route, Routes, Navigate,Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes,Link } from 'react-router-dom';
 import Inicio from './components/Pages/Inicio/Inicio'
 import Creartorneo from './components/Pages/Creartorneo/Creartorneo'
 import Gestortorneo from './components/Pages/Gestortorneo/Gestortorneo'
+import Ranking from './components/Pages/Ranking/Ranking'
 import './App.css'
 
 // index.css define .badge (forma) + un modificador de color: .badge-active,
